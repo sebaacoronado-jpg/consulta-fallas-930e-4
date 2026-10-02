@@ -8,13 +8,22 @@ export function parseQuery(codeValue,subValue=''){
 }
 export function resolveEvent(events,query){
  const event=events.find(e=>e.code===query.code);if(event)return {event,alias:false};
- // The supplied manual defines 100–199 for inverter 1 and 200–299 for inverter 2.
- const n=Number(query.code);if(n>=200&&n<=299){const base=events.find(e=>Number(e.code)===n-100);if(base&&/Inversor\s*1\s*\/\s*2/i.test(base.title))return {event:{...base,code:query.code,baseCode:base.code},alias:true};}
  return null;
+}
+export function supplementaryEvent(events,query){
+ const direct=events.find(e=>e.code===query.code);if(direct)return direct;
+ const n=Number(query.code);
+ if(n>=200&&n<300)return events.find(e=>Number(e.code)===n-100&&/Inversor\s*1\s*\/\s*2/i.test(e.title))||null;
+ return null;
+}
+export function resolveDataset(dataset,query){
+ const verified=resolveEvent(dataset.events,query);if(verified)return verified;
+ const generic=supplementaryEvent(dataset.supplementaryEvents||[],query);
+ return generic?{event:{...generic,code:query.code},alias:false}:null;
 }
 export function getGuides(event,sub){
  const selected=sub?Number(sub):null;
- return {specific:false,steps:event.steps.map(step=>({...step,selected:selected!==null&&step.number===selected})),context:''};
+ return {specific:selected!==null&&(event.subcodes||[]).some(s=>s.number===selected),steps:(event.subcodes||[]).map(s=>({...s,selected:s.number===selected})),context:''};
 }
 export const keyOf=q=>`${q.code}${q.sub?'/'+q.sub:''}`;
 export function sourceLink(doc,page){const part=doc.parts.find(p=>page>=p.start&&page<=p.end)||doc.parts[0];return part.file+(page?'#page='+(page-part.start+1):'');}
