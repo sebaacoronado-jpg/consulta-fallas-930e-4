@@ -1,0 +1,12 @@
+CONSULTA DE FALLAS 930E-4 · INGENIERÍA · SACC
+
+1. Descomprime este paquete.
+2. Sube los archivos de app a la raíz de un NUEVO repositorio GitHub.
+3. Sube los PDF dentro de manuales; conserva los nombres. Cada PDF tiene menos de 25 MB. Sube individualmente o en lotes pequeños.
+4. Settings > Pages > Deploy from a branch > main > / (root) > Save.
+5. Abre la URL publicada en Chrome (Android) o Safari (iPhone) y agrega la aplicación a la pantalla de inicio.
+
+Búsqueda: 2, 02 y 002 equivalentes. 2/1 resalta el paso 1 y mantiene toda la guía.
+Favoritos e historial exclusivos del E4. La consulta funciona sin conexión después de abrir la app; los PDF requieren conexión.
+
+Se conservan las revisiones distintas de los manuales; español preferente. Verifica serie y revisión en la tarjeta antes de abrir el manual.

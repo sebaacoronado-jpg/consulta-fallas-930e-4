@@ -1,0 +1,4 @@
+const CACHE='sacc-930e4-v2';const ASSETS=['./','index.html','style.css','app.js','core.js','data.json','manifest.webmanifest','icon-192.png','icon-512.png'];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k.startsWith('sacc-930e4-')).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(url.origin!==location.origin||e.request.method!=='GET'||url.pathname.includes('/manuales/')||!ASSETS.some(a=>url.pathname.endsWith(a.replace('./','/'))))return;e.respondWith(fetch(e.request).then(response=>{if(response.ok&&response.type!=='opaqueredirect'){const copy=response.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));}return response;}).catch(()=>caches.match(e.request)));});
